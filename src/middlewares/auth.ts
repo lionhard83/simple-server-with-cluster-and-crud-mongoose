@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { jwtSalt } from "../routes/auth";
+export const jwtSalt = "pippo";
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.headers);

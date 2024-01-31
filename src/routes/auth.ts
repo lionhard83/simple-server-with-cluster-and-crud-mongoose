@@ -4,11 +4,15 @@ import { body, matchedData, param, validationResult } from "express-validator";
 import { checkValidation } from "../middlewares/validations";
 import { v4 } from "uuid";
 import jwt from "jsonwebtoken";
-export const jwtSalt = "pippo";
+
 const router = express.Router();
 import bcrypt from "bcrypt";
-import { auth as authValidation } from "../middlewares/auth";
+import { auth, jwtSalt } from "../middlewares/auth";
 const salt = 10;
+
+router.get("/me", auth, (req: Request, res: Response) => {
+  res.json({ message: `Hello ${res.locals.user.name}` });
+});
 
 router.post(
   "/signup",
@@ -79,9 +83,5 @@ router.post(
     });
   }
 );
-
-// router.get("/me", authValidation, (req: Request, res: Response) => {
-//   res.json({ message: "Auth api works!" });
-// });
 
 export default router;
