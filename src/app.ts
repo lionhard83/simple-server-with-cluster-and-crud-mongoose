@@ -2,9 +2,11 @@ import express, { NextFunction, Request, Response } from "express";
 import { connect } from "mongoose";
 
 const app = express();
-const psw = "YOUR_PASSWORD";
+const psw = "rXMMlCuyTYXe32MN";
 const url = `mongodb+srv://test:${psw}@cluster0.jaszgdy.mongodb.net/`;
 import users from "./routes/users";
+import companies from "./routes/companies";
+import auth from "./routes/auth";
 
 const PORT = 3000;
 
@@ -17,6 +19,8 @@ connect(url)
   });
 
 app.use(express.json());
+app.use("/auth", auth);
 app.use("/users", users);
+app.use("/companies", companies);
 
 app.listen(PORT, () => console.log(`Server is runnning on port: ${PORT}`));

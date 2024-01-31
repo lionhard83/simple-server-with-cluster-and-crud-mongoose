@@ -3,6 +3,7 @@ const app = express.Router();
 import { body, param, matchedData } from "express-validator";
 import { User } from "../models/User";
 import { checkValidation } from "../middlewares/validations";
+import { auth } from "../middlewares/auth";
 
 app.get("/", async (_: Request, res: Response) => {
   const users = await User.find();
@@ -41,6 +42,7 @@ app.put(
 
 app.delete(
   "/:id",
+  auth,
   param("id").isMongoId(),
   checkValidation,
   async (req: Request, res: Response) => {
@@ -54,12 +56,15 @@ app.delete(
 
 app.post(
   "/",
+  auth,
   body("name").trim(),
   body("email").isEmail(),
   body("avatar").optional().trim(),
   checkValidation,
   async (req: Request, res: Response) => {
     try {
+      console.log("req.body:", req.body);
+      console.log("matchedData(req):", matchedData(req));
       const user = new User(matchedData(req));
       const userCreated = await user.save();
       res.json(userCreated);
