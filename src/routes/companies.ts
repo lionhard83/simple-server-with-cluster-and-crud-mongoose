@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from "express";
 import { Company } from "../models/Company";
 import { body, matchedData, param, validationResult } from "express-validator";
 import { checkValidation } from "../middlewares/validations";
-import { auth } from "../middlewares/auth";
 const router = express.Router();
 
 // const app = express();
@@ -26,7 +25,6 @@ router.get(
 
 router.post(
   "/",
-  auth,
   body("name").trim(),
   body("email").isEmail(),
   body("address").optional().trim(),
