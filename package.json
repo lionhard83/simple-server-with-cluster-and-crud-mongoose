@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/app.js",
+    "start": "export NODE_ENV=stage && npm run build && node dist/app.js",
+    "start:cloud": "export NODE_ENV=cloud && npm run build && node dist/app.js",
     "dev": "nodemon src/app.ts",
-    "test": "npm run build && mocha ./dist/tests/*.js -timeout=10000"
+    "test": "export NODE_ENV=test && npm run build && mocha ./dist/tests/*.js -timeout=10000"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +30,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/uuid": "^9.0.8",
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
