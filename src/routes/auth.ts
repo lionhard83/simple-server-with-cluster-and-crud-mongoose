@@ -9,9 +9,9 @@ const salt = 10;
 
 router.post(
   "/signup",
-  body("name").trim(),
-  body("email").trim().isEmail(),
-  body("password").trim().isStrongPassword(),
+  body("name").notEmpty().trim(),
+  body("email").notEmpty().trim().isEmail(),
+  body("password").notEmpty().trim().isStrongPassword(),
   body("avatar").isURL().optional(),
   checkValidation,
   async (req: Request, res: Response) => {
@@ -26,7 +26,7 @@ router.post(
     try {
       const user = new User(params);
       await user.save();
-      res.status(201).json({ message: "User created", user: { id: user._id } });
+      res.status(201).json({ message: "User created", id: user._id });
     } catch (err) {
       res.status(409).json({ err });
     }
